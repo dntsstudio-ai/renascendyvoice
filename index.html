@@ -709,3 +709,32 @@
     <div class="releases-grid" id="releases-container">
         </div>
 </section>
+// 6. Функция инициализации всех систем
+        async function bootstrap() {
+            console.log("Система Renascendi Voice запущена...");
+            
+            // Инициализация поиска
+            if (typeof initSearch === 'function') initSearch();
+            
+            // Проверка текущего хэша для SPA-навигации
+            const startPage = window.location.hash.replace('#', '') || 'home';
+            if (typeof navigate === 'function') navigate(startPage);
+            
+            // Скрытие прелоадера (если он завис)
+            setTimeout(() => {
+                const loader = document.getElementById('preloader');
+                if(loader) loader.style.display = 'none';
+            }, 2000);
+        }
+
+        // Запуск при полной загрузке страницы
+        window.addEventListener('load', bootstrap);
+
+    </script> <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("UI Components Ready");
+        });
+    </script>
+
+    </body> 
+</html>
