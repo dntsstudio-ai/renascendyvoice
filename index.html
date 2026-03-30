@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renascendi Voice — Профессиональная озвучка и дубляж</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* Минималистичная цветовая палитра */
+        :root {
+            --bg-main: #ffffff; /* Белый фон */
+            --bg-card: #f8fafc; /* Светлый фон для карточек */
+            --text-dark: #0f172a; 
+            --blue: #2563eb; /* Синий */
+            --turquoise: #0ea5e9; /* Бирюзовый */
+            --light-green: #4ade80; /* Салатовый */
+            --border: #e2e8f0;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Навигация и Хедер */
+        header {
+            background-color: var(--bg-main);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Плейсхолдер под твой логотип */
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--turquoise); 
+            object-fit: cover;
+            border: 2px solid var(--light-green);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active-link {
+            color: var(--turquoise);
+        }
+
+        /* Основной контейнер */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Скрываем неактивные страницы */
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Сетка Тайтлов (исправлен баг с заполнением всей страницы) */
+        .titles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .title-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .title-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.2);
+            border-color: var(--turquoise);
+        }
+
+        .title-cover {
+            width: 100%;
+            height: 350px;
+            background-color: var(--light-green); /* Заглушка, если нет картинки */
+            object-fit: cover;
+        }
+
+        .title-info {
+            padding: 1rem;
+        }
+
+        .title-info h3 {
+            color: var(--blue);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Отдельная страница Профиля */
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--light-green);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--border);
+            margin: 0 auto 1rem;
+            display: block;
+            object-fit: cover;
+            border: 3px solid var(--turquoise);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--blue);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--turquoise);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+
+        /* Кнопки */
+        .btn {
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: var(--turquoise);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo" onclick="navigate('home')">
+                <img src="photo_2026-01-07_12-01-24.jpg" alt="Logo" class="logo-img" onerror="this.src='';">
+                Renascendi Voice
+            </a>
+            
+            <nav class="nav-menu">
+                <button class="nav-link" onclick="navigate('home')" id="nav-home">Главная</button>
+                <button class="nav-link" onclick="navigate('releases')" id="nav-releases">Релизы</button>
+                <button class="nav-link" onclick="navigate('profile')" id="nav-profile"><i class="fas fa-user"></i> Профиль</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="page active">
+            <h1 style="color: var(--blue); font-size: 2.5rem; margin-bottom: 1rem;">Добро пожаловать в Renascendi Voice</h1>
+            <p style="font-size: 1.2rem; max-width: 800px;">Профессиональная озвучка и дубляж нового уровня. Мы создаем качественный контент в минималистичном и удобном формате.</p>
+        </section>
+
+        <section id="releases" class="page">
+            <h2 style="color: var(--blue); font-size: 2rem;">Наши Релизы</h2>
+            <div class="titles-grid" id="titles-container">
+                <div class="title-card">
+                    <div class="title-cover"></div>
+                    <div class="title-info">
+                        <h3>Название Тайтла 1</h3>
+                        <p style="color: #64748b; font-size: 0.9rem;">Эпизод 1 • Озвучено</p>
+                    </div>
+                </div>
+                <div class="title-card">
+                    <div class="title-cover" style="background-color: var(--turquoise);"></div>
+                    <div class="title-info">
+                        <h3>Название Тайтла 2</h3>
+                        <p style="color: #64748b; font-size: 0.9rem;">Эпизод 5 • В процессе</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="profile" class="page">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <h2>Настройки профиля</h2>
+                    <p style="color: #64748b;">Управляйте своими данными и внешним видом</p>
+                </div>
+
+                <img src="https://via.placeholder.com/150" alt="Аватарка" class="avatar-preview" id="preview-img">
+                
+                <div class="form-group">
+                    <label for="prof-avatar"><i class="fas fa-image"></i> Ссылка на аватарку</label>
+                    <input type="text" id="prof-avatar" placeholder="https://example.com/image.jpg" oninput="document.getElementById('preview-img').src = this.value || 'https://via.placeholder.com/150'">
+                </div>
+
+                <div class="form-group">
+                    <label for="prof-nick"><i class="fas fa-id-badge"></i> Никнейм</label>
+                    <input type="text" id="prof-nick" placeholder="Введите новый никнейм">
+                </div>
+
+                <div class="form-group">
+                    <label for="prof-email"><i class="fas fa-envelope"></i> Почта</label>
+                    <input type="email" id="prof-email" placeholder="newemail@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="prof-pass"><i class="fas fa-lock"></i> Новый пароль</label>
+                    <input type="password" id="prof-pass" placeholder="Оставьте пустым, если не хотите менять">
+                </div>
+
+                <button class="btn" onclick="updateProfile()"><i class="fas fa-save"></i> Сохранить изменения</button>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // Конфигурация Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXmKc6pehJSJMlMCdwt2tPwdlp9REe6eY",
+            authDomain: "renka-1f632.firebaseapp.com",
+            projectId: "renka-1f632",
+            storageBucket: "renka-1f632.firebasestorage.app",
+            messagingSenderId: "548186522398",
+            appId: "1:548186522398:web:18ae1949c4ea749773bf0f"
+        };
+
+        // Инициализация
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        console.log("Firebase успешно инициализирован для Renascendi Voice");
+
+        // Глобальная функция навигации (SPA логика)
+        window.navigate = function(pageId) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Показываем нужную
+            const targetPage = document.getElementById(pageId);
+            if(targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Обновляем активную ссылку в меню
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-link'));
+            const activeBtn = document.getElementById('nav-' + pageId);
+            if(activeBtn) activeBtn.classList.add('active-link');
+
+            // Обновляем URL
+            window.location.hash = pageId;
+        };
+
+        // Обработка загрузки страницы с хэшем (чтобы прямая ссылка на #profile работала)
+        window.addEventListener('load', () => {
+            const hashPage = window.location.hash.replace('#', '') || 'home';
+            navigate(hashPage);
+        });
+
+        // Функция-заглушка для сохранения профиля 
+        window.updateProfile = function() {
+            const nick = document.getElementById('prof-nick').value;
+            const email = document.getElementById('prof-email').value;
+            const pass = document.getElementById('prof-pass').value;
+            const avatar = document.getElementById('prof-avatar').value;
+
+            // Здесь в будущем будет логика обновления через `auth.currentUser.updateProfile` и `updateEmail`
+            console.log("Сбор данных для обновления:", { nick, email, pass, avatar });
+            alert("Данные подготовлены к сохранению! Осталось связать методы Auth из Firebase.");
+        }
+    </script>
+</body>
+</html>
