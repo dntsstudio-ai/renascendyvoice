@@ -3,811 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renascendi Voice — Профессиональная озвучка</title>
+    <title>Renascendi Voice — Professional CMS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* === БАЗОВЫЕ НАСТРОЙКИ И ПАЛИТРА === */
+        /* === ПЕРЕМЕННЫЕ И ОСНОВА (РАСШИРЕННАЯ) === */
         :root {
-            /* Цвета по запросу: Белый, Синий, Бирюзовый, Салатовый */
             --bg-main: #f8fafc;
-            --bg-glass: rgba(255, 255, 255, 0.85);
+            --bg-dark: #0f172a;
             --color-white: #ffffff;
-            --color-blue: #1e40af; /* Глубокий синий */
-            --color-blue-light: #3b82f6; /* Яркий синий */
-            --color-turquoise: #06b6d4; /* Бирюзовый */
-            --color-salad: #22c55e; /* Салатовый */
+            --color-blue: #1e40af;
+            --color-blue-light: #3b82f6;
+            --color-turquoise: #06b6d4;
+            --color-salad: #22c55e;
             --color-salad-hover: #16a34a;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --error-color: #ef4444;
-            
-            /* Эффекты */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-glow: 0 0 15px rgba(6, 182, 212, 0.3);
+            --warning-color: #f59e0b;
             --radius-md: 12px;
             --radius-lg: 20px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* === ТИПОГРАФИКА И БАЗОВЫЕ ЭЛЕМЕНТЫ === */
-        h1, h2, h3, h4 {
-            color: var(--color-blue);
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--color-blue-light);
-            transition: var(--transition);
-        }
-
-        a:hover {
-            color: var(--color-turquoise);
-        }
-
-        /* Кнопки */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            outline: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-blue-light), var(--color-turquoise));
-            color: var(--color-white);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-glow);
-            background: linear-gradient(135deg, var(--color-turquoise), var(--color-blue));
-        }
-
-        .btn-success {
-            background-color: var(--color-salad);
-            color: var(--color-white);
-        }
-
-        .btn-success:hover {
-            background-color: var(--color-salad-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--color-turquoise);
-            color: var(--color-turquoise);
-        }
-
-        .btn-outline:hover {
-            background: var(--color-turquoise);
-            color: var(--color-white);
-        }
-
-        /* === НАВИГАЦИЯ (HEADER) === */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--color-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .logo-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--color-turquoise);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
-            transition: var(--transition);
-        }
-
-        .logo-wrapper:hover .logo-img {
-            transform: rotate(10deg) scale(1.05);
-            border-color: var(--color-salad);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-item {
-            font-weight: 600;
-            color: var(--text-main);
-            position: relative;
-            padding: 0.5rem 0;
-            cursor: pointer;
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--color-salad);
-            transition: var(--transition);
-        }
-
-        .nav-item:hover::after, .nav-item.active::after {
-            width: 100%;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            color: var(--color-turquoise);
-        }
-
-        /* Панель пользователя в шапке */
-        .user-panel {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar-small {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--border-color);
-            object-fit: cover;
-            cursor: pointer;
-            border: 2px solid var(--color-blue-light);
-        }
-
-        /* === МОДАЛЬНЫЕ ОКНА (ВХОД / РЕГИСТРАЦИЯ) === */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: var(--color-white);
-            width: 100%;
-            max-width: 450px;
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            position: relative;
-            transform: translateY(20px) scale(0.95);
-            transition: var(--transition);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border-top: 5px solid var(--color-turquoise);
-        }
-
-        .modal-overlay.open .modal-content {
-            transform: translateY(0) scale(1);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            color: var(--error-color);
-            transform: rotate(90deg);
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .modal-header h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Формы */
-        .form-group {
-            margin-bottom: 1.2rem;
-            position: relative;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-            color: var(--text-main);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 16px 12px 40px;
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            background: var(--bg-main);
-            transition: var(--transition);
-            color: var(--text-main);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--color-turquoise);
-            background: var(--color-white);
-            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
-        }
-
-        .form-icon {
-            position: absolute;
-            top: 38px;
-            left: 14px;
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-
-        .form-input:focus + .form-icon {
-            color: var(--color-turquoise);
-        }
-
-        .form-error {
-            color: var(--error-color);
-            font-size: 0.85rem;
-            margin-top: 0.4rem;
-            display: none;
-        }
-
-        .modal-footer {
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-
-        .modal-footer span {
-            color: var(--color-blue-light);
-            font-weight: 600;
-            cursor: pointer;
-        }
+        /* === HEADER & NAVIGATION === */
+        .header { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--color-blue); text-decoration: none; font-size: 1.4rem; }
         
-        .modal-footer span:hover {
-            text-decoration: underline;
-            color: var(--color-turquoise);
-        }
+        .nav-menu { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; border-radius: 8px; }
+        .nav-link:hover { background: rgba(59, 130, 246, 0.1); color: var(--color-blue-light); }
+        .nav-link.active { color: var(--color-blue); background: rgba(59, 130, 246, 0.05); }
+
+        /* === PAGES SYSTEM === */
+        .page { display: none; padding: 100px 2rem 2rem; max-width: 1400px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === ADMIN PANEL SPECIFIC === */
+        .admin-grid { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; margin-top: 1rem; }
+        .admin-sidebar { background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md); height: fit-content; position: sticky; top: 100px; }
+        .admin-nav-btn { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 1rem; margin-bottom: 0.5rem; border: none; background: none; border-radius: 10px; cursor: pointer; font-weight: 600; color: var(--text-muted); transition: var(--transition); }
+        .admin-nav-btn:hover { background: var(--bg-main); color: var(--color-blue); }
+        .admin-nav-btn.active { background: var(--color-blue); color: white; box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3); }
+
+        .admin-card { background: var(--color-white); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-item { background: var(--color-white); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--color-blue); box-shadow: var(--shadow-sm); }
+        .stat-item h4 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+        .stat-item .val { font-size: 1.8rem; font-weight: 800; color: var(--text-main); }
+
+        /* === DATA TABLES === */
+        .table-container { overflow-x: auto; margin-top: 1rem; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 1rem; background: var(--bg-main); color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); }
+        td { padding: 1rem; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        tr:hover { background: rgba(248, 250, 252, 0.8); }
+
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-warning { background: #fef9c3; color: #854d0e; }
+
+        /* === FORMS & INPUTS === */
+        .form-group { margin-bottom: 1.5rem; }
+        .label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); font-size: 0.9rem; }
+        .input { width: 100%; padding: 12px 1rem; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 1rem; transition: var(--transition); outline: none; }
+        .input:focus { border-color: var(--color-blue-light); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: var(--transition); text-decoration: none; }
+        .btn-primary { background: var(--color-blue); color: white; }
+        .btn-primary:hover { background: var(--color-blue-light); transform: translateY(-2px); }
+        .btn-icon { padding: 8px; border-radius: 8px; background: var(--bg-main); color: var(--text-muted); }
+        .btn-icon:hover { color: var(--error-color); background: #fee2e2; }
+
+        /* === MODALS === */
+        .modal-wrap { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); display: none; items-content: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .modal-wrap.active { display: flex; }
+        .modal-box { background: white; width: 100%; max-width: 600px; border-radius: var(--radius-lg); padding: 2.5rem; position: relative; animation: zoomIn 0.3s ease; }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
+
     <header class="header">
         <div class="nav-container">
-            <a href="#home" class="logo-wrapper" onclick="spaNavigate('home')">
-                <img src="photo_2026-01-07_12-01-24.jpg" alt="Logo" class="logo-img" id="main-logo" onerror="this.src='https://via.placeholder.com/45/06b6d4/ffffff?text=RV'">
-                Renascendi Voice
+            <a href="#" class="logo" onclick="navigate('home')">
+                <div style="background: var(--color-blue); color: white; width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">R</div>
+                <span>Renascendi <span style="color: var(--color-turquoise)">Voice</span></span>
             </a>
-            
-            <nav class="nav-links" id="main-nav">
-                <div class="nav-item active" onclick="spaNavigate('home')" id="nav-home"><i class="fas fa-home"></i> Главная</div>
-                <div class="nav-item" onclick="spaNavigate('releases')" id="nav-releases"><i class="fas fa-film"></i> Релизы</div>
+            <nav class="nav-menu">
+                <a class="nav-link active" id="m-home" onclick="navigate('home')">Главная</a>
+                <a class="nav-link" id="m-releases" onclick="navigate('releases')">Релизы</a>
+                <div id="admin-link-placeholder"></div> <div id="auth-zone">
+                    <button class="btn btn-primary" style="padding: 8px 16px;" onclick="openModal('auth-modal')">Войти</button>
+                </div>
             </nav>
-
-            <div class="user-panel" id="user-panel-unauth">
-                <button class="btn btn-outline" onclick="openModal('loginModal')">Войти</button>
-                <button class="btn btn-primary" onclick="openModal('registerModal')">Регистрация</button>
-            </div>
-
-            <div class="user-panel" id="user-panel-auth" style="display: none;">
-                <span id="header-username" style="font-weight: 600; color: var(--color-blue);">Пользователь</span>
-                <img src="https://via.placeholder.com/40" alt="Avatar" class="user-avatar-small" id="header-avatar" onclick="spaNavigate('profile')">
-                <button class="btn btn-outline" onclick="logoutUser()" title="Выйти"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
         </div>
     </header>
 
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
-            <div class="modal-header">
-                <h2>С возвращением!</h2>
-                <p style="color: var(--text-muted);">Войдите, чтобы продолжить просмотр</p>
-            </div>
-            <form id="login-form" onsubmit="event.preventDefault(); loginUser();">
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" id="login-email" required placeholder="your@email.com">
-                    <i class="fas fa-envelope form-icon"></i>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Пароль</label>
-                    <input type="password" class="form-input" id="login-pass" required placeholder="••••••••">
-                    <i class="fas fa-lock form-icon"></i>
-                    <div class="form-error" id="login-error">Неверный email или пароль</div>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Войти в аккаунт</button>
-            </form>
-            <div class="modal-footer">
-                Нет аккаунта? <span onclick="switchModals('loginModal', 'registerModal')">Зарегистрироваться</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="registerModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('registerModal')"><i class="fas fa-times"></i></button>
-            <div class="modal-header">
-                <h2>Создать аккаунт</h2>
-                <p style="color: var(--text-muted);">Присоединяйтесь к Renascendi Voice</p>
-            </div>
-            <form id="register-form" onsubmit="event.preventDefault(); registerUser();">
-                <div class="form-group">
-                    <label class="form-label">Никнейм</label>
-                    <input type="text" class="form-input" id="reg-nick" required placeholder="Придумайте никнейм">
-                    <i class="fas fa-user form-icon"></i>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" id="reg-email" required placeholder="your@email.com">
-                    <i class="fas fa-envelope form-icon"></i>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Пароль</label>
-                    <input type="password" class="form-input" id="reg-pass" required minlength="6" placeholder="Минимум 6 символов">
-                    <i class="fas fa-lock form-icon"></i>
-                    <div class="form-error" id="reg-error">Ошибка при регистрации</div>
-                </div>
-                <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 10px;">Зарегистрироваться</button>
-            </form>
-            <div class="modal-footer">
-                Уже есть аккаунт? <span onclick="switchModals('registerModal', 'loginModal')">Войти</span>
-            </div>
-        </div>
-    </div>
-    /* === ОСНОВНОЙ КОНТЕНТ (MAIN) === */
-        .main-content {
-            margin-top: 80px; /* Отступ под фиксированную шапку */
-            flex-grow: 1;
-        }
-
-        .page {
-            display: none;
-            padding: 2rem 0;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 90%;
-        }
-
-        .page.active {
-            display: block;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* === HERO СЕКЦИЯ (ГЛАВНАЯ) === */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 4rem 0;
-            gap: 2rem;
-        }
-
-        .hero-text { flex: 1; }
-        .hero-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--color-blue), var(--color-turquoise));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-text p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-circle {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(45deg, var(--color-turquoise), var(--color-salad));
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            animation: morph 8s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        @keyframes morph {
-            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-            50% { border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%; }
-            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-        }
-
-        /* === СЕТКА РЕЛИЗОВ (РЕЛИЗЫ) === */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 1rem;
-        }
-
-        .releases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 2rem;
-        }
-
-        .release-card {
-            background: var(--color-white);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .release-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--color-turquoise);
-        }
-
-        .release-poster {
-            width: 100%;
-            height: 340px;
-            background-color: #cbd5e1;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .release-card:hover .release-poster {
-            filter: brightness(0.8);
-        }
-
-        .release-info {
-            padding: 1.25rem;
-        }
-
-        .release-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .release-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: white;
-            z-index: 10;
-        }
-
-        .badge-new { background-color: var(--color-salad); }
-
-        /* === СТРАНИЦА ПРОФИЛЯ (ЛИЧНЫЙ КАБИНЕТ) === */
-        .profile-layout {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .profile-sidebar {
-            background: var(--color-white);
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            text-align: center;
-            border-top: 6px solid var(--color-blue);
-        }
-
-        .profile-avatar-container {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .profile-avatar-big {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--color-turquoise);
-            padding: 4px;
-            background: white;
-        }
-
-        .avatar-edit-btn {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background: var(--color-salad);
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 3px solid white;
-            transition: var(--transition);
-        }
-
-        .avatar-edit-btn:hover { background: var(--color-blue); }
-
-        .profile-name { font-size: 1.5rem; margin-bottom: 0.25rem; }
-        .profile-status { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 1.5rem;
-            padding: 1rem 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .stat-box h4 { font-size: 1.2rem; color: var(--color-turquoise); }
-        .stat-box span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
-
-        .profile-main-settings {
-            background: var(--color-white);
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-        }
-
-        .settings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .full-width { grid-column: span 2; }
-    </style>
-</head>
-<body>
-    <main class="main-content">
-        <section id="home" class="page active">
-            <div class="hero">
-                <div class="hero-text">
-                    <h1>Голос, который <br>оживляет миры</h1>
-                    <p>Renascendi Voice — это команда энтузиастов, создающая качественную русскую озвучку для ваших любимых произведений. Мы ценим чистоту звука и эмоции в каждой реплике.</p>
+    <main>
+        <section id="p-home" class="page active">
+            <div style="display: flex; align-items: center; justify-content: space-between; min-height: 60vh;">
+                <div style="flex: 1;">
+                    <h1 style="font-size: 4rem; line-height: 1.1; margin-bottom: 2rem;">Студия, которой <br><span style="color: var(--color-blue-light)">доверяют уши.</span></h1>
+                    <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 500px; margin-bottom: 2.5rem;">Мы не просто переводим — мы переносим атмосферу. Лучшая русская озвучка для ваших любимых проектов.</p>
                     <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-primary" onclick="spaNavigate('releases')">Смотреть релизы</button>
-                        <button class="btn btn-outline">О команде</button>
+                        <button class="btn btn-primary" onclick="navigate('releases')">Каталог тайтлов</button>
+                        <button class="btn" style="background: white; border: 1.5px solid var(--border-color);">О команде</button>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <div class="hero-circle">
-                        <i class="fas fa-microphone-alt" style="font-size: 10rem; color: white;"></i>
-                    </div>
+                <div style="flex: 1; display: flex; justify-content: flex-end;">
+                    <div style="width: 450px; height: 450px; background: linear-gradient(45deg, var(--color-blue), var(--color-turquoise)); border-radius: 40% 60% 70% 30% / 40% 40% 60% 60%; animation: morphing 10s infinite alternate;"></div>
                 </div>
             </div>
         </section>
 
-        <section id="releases" class="page">
-            <div class="section-header">
-                <h2>Каталог релизов</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">Новые</button>
-                    <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">Популярные</button>
-                </div>
-            </div>
-            
-            <div class="releases-grid" id="releases-container">
-                <div class="release-card">
-                    <span class="badge badge-new">NEW</span>
-                    <img src="https://via.placeholder.com/300x450" class="release-poster" alt="Title">
-                    <div class="release-info">
-                        <div class="release-title">Магическая Битва</div>
-                        <div class="release-meta">
-                            <span><i class="fas fa-layer-group"></i> 2 Сезон</span>
-                            <span><i class="fas fa-check-circle"></i> Завершен</span>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        </section>
-
-        <section id="profile" class="page">
-            <div class="profile-layout">
-                <aside class="profile-sidebar">
-                    <div class="profile-avatar-container">
-                        <img src="https://via.placeholder.com/160" alt="Avatar" class="profile-avatar-big" id="profile-img-view">
-                        <label for="avatar-upload" class="avatar-edit-btn">
-                            <i class="fas fa-camera"></i>
-                        </label>
-                        <input type="file" id="avatar-upload" style="display:none" accept="image/*">
-                    </div>
-                    <h2 class="profile-name" id="display-name">Пользователь</h2>
-                    <p class="profile-status">Участник сообщества</p>
-                    
-                    <div class="profile-stats">
-                        <div class="stat-box">
-                            <h4 id="stat-count">0</h4>
-                            <span>Просмотров</span>
-                        </div>
-                        <div class="stat-box">
-                            <h4>4.9</h4>
-                            <span>Рейтинг</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-outline" style="width: 100%;" onclick="logoutUser()">
-                        <i class="fas fa-sign-out-alt"></i> Выйти из системы
-                    </button>
+        <section id="p-admin" class="page">
+            <div class="admin-grid">
+                <aside class="admin-sidebar">
+                    <h3 style="margin-bottom: 1.5rem; padding-left: 1rem;">Dashboard</h3>
+                    <button class="admin-nav-btn active" onclick="switchAdminTab('titles')"><i class="fas fa-film"></i> Тайтлы</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('users')"><i class="fas fa-users"></i> Пользователи</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('stats')"><i class="fas fa-chart-line"></i> Статистика</button>
+                    <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border-color);">
+                    <button class="admin-nav-btn" style="color: var(--error-color)" onclick="logout()"><i class="fas fa-power-off"></i> Выход</button>
                 </aside>
 
-                <div class="profile-main-settings">
-                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-cog"></i> Настройки аккаунта</h3>
-                    <form id="profile-settings-form">
-                        <div class="settings-grid">
-                            <div class="form-group">
-                                <label class="form-label">Никнейм</label>
-                                <input type="text" class="form-input" id="edit-nick" placeholder="Ваш ник">
-                                <i class="fas fa-user form-icon" style="top: 38px;"></i>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Публичный Email</label>
-                                <input type="email" class="form-input" id="edit-email" placeholder="email@example.com">
-                                <i class="fas fa-envelope form-icon" style="top: 38px;"></i>
-                            </div>
-                            <div class="form-group full-width">
-                                <label class="form-label">Ссылка на аватарку (URL)</label>
-                                <input type="text" class="form-input" id="edit-avatar-url" placeholder="https://...">
-                                <i class="fas fa-link form-icon" style="top: 38px;"></i>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Новый пароль</label>
-                                <input type="password" class="form-input" id="edit-pass" placeholder="••••••••">
-                                <i class="fas fa-key form-icon" style="top: 38px;"></i>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Подтверждение</label>
-                                <input type="password" class="form-input" id="edit-pass-confirm" placeholder="••••••••">
-                                <i class="fas fa-shield-alt form-icon" style="top: 38px;"></i>
+                <div class="admin-content">
+                    <div id="adm-titles" class="admin-tab">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>Управление релизами</h2>
+                            <button class="btn btn-primary" onclick="openModal('add-title-modal')"><i class="fas fa-plus"></i> Добавить тайтл</button>
+                        </div>
+                        
+                        <div class="stats-row">
+                            <div class="stat-item"><h4>Всего тайтлов</h4><div class="val" id="count-titles">0</div></div>
+                            <div class="stat-item" style="border-left-color: var(--color-salad)"><h4>В работе</h4><div class="val" id="count-ongoing">0</div></div>
+                            <div class="stat-item" style="border-left-color: var(--color-turquoise)"><h4>Просмотров</h4><div class="val">12.4k</div></div>
+                        </div>
+
+                        <div class="admin-card">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Обложка</th>
+                                            <th>Название</th>
+                                            <th>Статус</th>
+                                            <th>Серии</th>
+                                            <th>Действия</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="titles-table-body">
+                                        </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div style="margin-top: 1rem; display: flex; justify-content: flex-end;">
-                            <button type="button" class="btn btn-success" onclick="saveProfileChanges()">
-                                <i class="fas fa-check"></i> Сохранить все изменения
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <div class="modal-wrap" id="auth-modal">
+        <div class="modal-box" style="max-width: 400px;">
+            <button onclick="closeModal('auth-modal')" style="position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 1.2rem; cursor: pointer;">&times;</button>
+            <h2 id="auth-title" style="margin-bottom: 1.5rem;">Вход в аккаунт</h2>
+            <div id="auth-form">
+                <div class="form-group">
+                    <label class="label">Email</label>
+                    <input type="email" id="auth-email" class="input" placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label class="label">Пароль</label>
+                    <input type="password" id="auth-pass" class="input" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="handleAuth()">Войти</button>
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                    Нет аккаунта? <a href="#" onclick="toggleAuthMode()" style="color: var(--color-blue); font-weight: 700;">Создать</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-wrap" id="add-title-modal">
+        <div class="modal-box">
+            <button onclick="closeModal('add-title-modal')" style="position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 1.2rem; cursor: pointer;">&times;</button>
+            <h2 style="margin-bottom: 1.5rem;">Добавить новый релиз</h2>
+            <div class="settings-grid">
+                <div class="form-group" style="grid-column: span 2;">
+                    <label class="label">Название тайтла</label>
+                    <input type="text" id="new-title-name" class="input" placeholder="Например: Магическая битва">
+                </div>
+                <div class="form-group">
+                    <label class="label">Статус</label>
+                    <select id="new-title-status" class="input" style="padding-left: 10px;">
+                        <option value="ongoing">Онгоинг</option>
+                        <option value="completed">Завершен</option>
+                        <option value="announced">Анонс</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label">Кол-во серий</label>
+                    <input type="number" id="new-title-ep" class="input" placeholder="12">
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label class="label">URL обложки (постер)</label>
+                    <input type="text" id="new-title-poster" class="input" placeholder="https://image-link.com/poster.jpg">
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="createNewRelease()">
+                <i class="fas fa-save"></i> Опубликовать тайтл
+            </button>
+        </div>
+    </div>
+
     <script type="module">
-        // Импорт Firebase SDK (v10+)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { 
-            getAuth, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword, 
-            signOut, 
-            onAuthStateChanged,
-            updateProfile,
-            updatePassword
+            getAuth, onAuthStateChanged, signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, signOut, updateProfile 
         } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { 
-            getFirestore, 
-            doc, 
-            setDoc, 
-            getDoc, 
-            updateDoc,
-            collection,
-            getDocs 
+            getFirestore, doc, setDoc, getDoc, collection, 
+            addDoc, getDocs, deleteDoc, updateDoc 
         } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // Твой конфиг базы данных
+        // Конфигурация Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAXmKc6pehJSJMlMCdwt2tPwdlp9REe6eY",
             authDomain: "renka-1f632.firebaseapp.com",
@@ -817,588 +245,467 @@
             appId: "1:548186522398:web:18ae1949c4ea749773bf0f"
         };
 
-        // Инициализация
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ СОСТОЯНИЯ ---
+        // Состояние приложения
         let currentUser = null;
+        let isAdmin = false;
+        let authMode = 'login';
 
-        // --- УПРАВЛЕНИЕ МОДАЛЬНЫМИ ОКНАМИ ---
-        window.openModal = function(modalId) {
-            document.getElementById(modalId).classList.add('open');
-            document.body.style.overflow = 'hidden'; // Запрет прокрутки
+        // --- НАВИГАЦИЯ ---
+        window.navigate = function(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            const targetPage = document.getElementById(`p-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                const navLink = document.getElementById(`m-${pageId}`);
+                if (navLink) navLink.classList.add('active');
+                window.location.hash = pageId;
+            }
         };
 
-        window.closeModal = function(modalId) {
-            document.getElementById(modalId).classList.remove('open');
+        // --- МОДАЛЬНЫЕ ОКНА ---
+        window.openModal = function(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeModal = function(id) {
+            document.getElementById(id).classList.remove('active');
             document.body.style.overflow = 'auto';
         };
 
-        window.switchModals = function(fromId, toId) {
-            closeModal(fromId);
-            setTimeout(() => openModal(toId), 300);
+        window.toggleAuthMode = function() {
+            authMode = (authMode === 'login') ? 'register' : 'login';
+            document.getElementById('auth-title').innerText = (authMode === 'login') ? 'Вход в аккаунт' : 'Регистрация';
+            // Можно добавить поле для Ника при регистрации
         };
 
-        // --- НАВИГАЦИЯ (SPA) ---
-        window.spaNavigate = function(pageId) {
-            // Убираем активный класс у всех страниц и ссылок
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
-
-            // Активируем нужную страницу
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.classList.add('active');
-                window.location.hash = pageId;
-            }
-
-            // Подсвечиваем пункт меню
-            const navBtn = document.getElementById('nav-' + pageId);
-            if (navBtn) navBtn.classList.add('active');
-
-            // Скролл вверх при смене страницы
-            window.scrollTo(0, 0);
-        };
-
-        // --- ЛОГИКА АВТОРИЗАЦИИ ---
-        
-        // 1. Регистрация
-        window.registerUser = async function() {
-            const nick = document.getElementById('reg-nick').value;
-            const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-pass').value;
-            const errorEl = document.getElementById('reg-error');
+        // --- АВТОРИЗАЦИЯ ---
+        window.handleAuth = async function() {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-pass').value;
 
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-                const user = userCredential.user;
-
-                // Создаем профиль в Firestore
-                await setDoc(doc(db, "users", user.uid), {
-                    nickname: nick,
-                    email: email,
-                    avatar: "https://via.placeholder.com/160",
-                    role: "user",
-                    views: 0,
-                    createdAt: new Date().toISOString()
-                });
-
-                // Обновляем DisplayName в Auth
-                await updateProfile(user, { displayName: nick });
-
-                closeModal('registerModal');
-                alert("Добро пожаловать в Renascendi Voice, " + nick + "!");
-            } catch (error) {
-                errorEl.innerText = "Ошибка: " + error.message;
-                errorEl.style.display = 'block';
+                if (authMode === 'login') {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                } else {
+                    const res = await createUserWithEmailAndPassword(auth, email, pass);
+                    // Создаем запись пользователя в БД
+                    await setDoc(doc(db, "users", res.user.uid), {
+                        email: email,
+                        role: 'user',
+                        nickname: email.split('@')[0],
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                closeModal('auth-modal');
+            } catch (err) {
+                alert("Ошибка авторизации: " + err.message);
             }
         };
 
-        // 2. Вход
-        window.loginUser = async function() {
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-pass').value;
-            const errorEl = document.getElementById('login-error');
+        window.logout = function() {
+            if(confirm("Выйти из системы?")) {
+                signOut(auth).then(() => location.reload());
+            }
+        };
+
+        // --- УПРАВЛЕНИЕ ТАЙТЛАМИ (ADMIN) ---
+        window.createNewRelease = async function() {
+            const titleData = {
+                title: document.getElementById('new-title-name').value,
+                status: document.getElementById('new-title-status').value,
+                episodes: document.getElementById('new-title-ep').value,
+                poster: document.getElementById('new-title-poster').value || 'https://via.placeholder.com/300x450',
+                createdAt: new Date().getTime()
+            };
+
+            if (!titleData.title) return alert("Введите название!");
 
             try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                closeModal('loginModal');
-            } catch (error) {
-                errorEl.innerText = "Неверные данные для входа";
-                errorEl.style.display = 'block';
+                await addDoc(collection(db, "titles"), titleData);
+                closeModal('add-title-modal');
+                alert("Тайтл успешно добавлен!");
+                loadAdminTitles(); // Перезагрузка списка
+            } catch (err) {
+                console.error(err);
             }
         };
 
-        // 3. Выход
-        window.logoutUser = function() {
-            if(confirm("Вы действительно хотите выйти?")) {
-                signOut(auth).then(() => {
-                    spaNavigate('home');
-                    location.reload();
-                });
-            }
-        };
-
-        // --- СЛУШАТЕЛЬ СОСТОЯНИЯ ПОЛЬЗОВАТЕЛЯ ---
+        // --- ПРОВЕРКА СОСТОЯНИЯ ---
         onAuthStateChanged(auth, async (user) => {
-            const unauthPanel = document.getElementById('user-panel-unauth');
-            const authPanel = document.getElementById('user-panel-auth');
+            const authZone = document.getElementById('auth-zone');
+            const adminPlaceholder = document.getElementById('admin-link-placeholder');
 
             if (user) {
                 currentUser = user;
-                // Получаем доп. данные из Firestore
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 const userData = userDoc.data();
-
-                // Обновляем UI шапки
-                document.getElementById('header-username').innerText = userData?.nickname || user.displayName;
-                document.getElementById('header-avatar').src = userData?.avatar || "https://via.placeholder.com/40";
                 
-                unauthPanel.style.display = 'none';
-                authPanel.style.display = 'flex';
+                isAdmin = userData?.role === 'admin';
 
-                // Заполняем поля в настройках профиля
-                fillProfileSettings(userData);
+                // Меняем UI
+                authZone.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-weight: 600; font-size: 0.9rem;">${userData?.nickname || user.email}</span>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background: #ddd; cursor: pointer;" onclick="navigate('profile')"></div>
+                    </div>
+                `;
+
+                if (isAdmin) {
+                    adminPlaceholder.innerHTML = `<a class="nav-link" id="m-admin" onclick="navigate('admin')">Админ-панель</a>`;
+                    loadAdminTitles();
+                }
             } else {
                 currentUser = null;
-                unauthPanel.style.display = 'flex';
-                authPanel.style.display = 'none';
+                isAdmin = false;
             }
         });
-
-        // Заполнение настроек профиля
-        function fillProfileSettings(data) {
-            if(!data) return;
-            document.getElementById('display-name').innerText = data.nickname;
-            document.getElementById('stat-count').innerText = data.views || 0;
-            document.getElementById('profile-img-view').src = data.avatar;
+        // --- ЗАГРУЗКА ДАННЫХ ДЛЯ АДМИН-ПАНЕЛИ ---
+        window.loadAdminTitles = async function() {
+            const tbody = document.getElementById('titles-table-body');
+            const countTitles = document.getElementById('count-titles');
+            const countOngoing = document.getElementById('count-ongoing');
             
-            document.getElementById('edit-nick').value = data.nickname;
-            document.getElementById('edit-email').value = data.email;
-            document.getElementById('edit-avatar-url').value = data.avatar;
-        }
-        // --- ОБНОВЛЕНИЕ ДАННЫХ ПРОФИЛЯ ---
-        window.saveProfileChanges = async function() {
-            if (!currentUser) return;
-
-            const newNick = document.getElementById('edit-nick').value;
-            const newEmail = document.getElementById('edit-email').value;
-            const newAvatar = document.getElementById('edit-avatar-url').value;
-            const newPass = document.getElementById('edit-pass').value;
-            const confirmPass = document.getElementById('edit-pass-confirm').value;
-
             try {
-                // 1. Обновляем данные в Firestore
-                const userRef = doc(db, "users", currentUser.uid);
-                await updateDoc(userRef, {
-                    nickname: newNick,
-                    email: newEmail,
-                    avatar: newAvatar
+                const querySnapshot = await getDocs(collection(db, "titles"));
+                tbody.innerHTML = '';
+                let total = 0;
+                let ongoing = 0;
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const id = docSnap.id;
+                    total++;
+                    if(data.status === 'ongoing') ongoing++;
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><img src="${data.poster}" style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;"></td>
+                            <td><div style="font-weight: 700;">${data.title}</div><div style="font-size: 0.8rem; color: var(--text-muted);">ID: ${id}</div></td>
+                            <td><span class="badge ${data.status === 'completed' ? 'badge-success' : 'badge-warning'}">${data.status}</span></td>
+                            <td>${data.episodes || 0} эп.</td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn-icon" onclick="deleteTitle('${id}')" title="Удалить"><i class="fas fa-trash"></i></button>
+                                    <button class="btn-icon" onclick="editTitlePrompt('${id}')" title="Изменить"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
                 });
 
-                // 2. Обновляем профиль в Firebase Auth
-                await updateProfile(currentUser, {
-                    displayName: newNick,
-                    photoURL: newAvatar
-                });
-
-                // 3. Если введен новый пароль и он совпадает
-                if (newPass && newPass === confirmPass) {
-                    await updatePassword(currentUser, newPass);
-                    alert("Данные и пароль успешно обновлены!");
-                } else if (newPass && newPass !== confirmPass) {
-                    alert("Пароли не совпадают!");
-                    return;
-                } else {
-                    alert("Профиль успешно обновлен!");
-                }
-
-                // Обновляем UI
-                location.reload(); 
-            } catch (error) {
-                console.error(error);
-                alert("Ошибка при сохранении: " + error.message);
+                countTitles.innerText = total;
+                countOngoing.innerText = ongoing;
+                
+                // После загрузки админки обновляем и публичный каталог
+                loadPublicReleases(); 
+            } catch (err) {
+                console.error("Ошибка загрузки таблицы:", err);
             }
         };
 
-        // Логика загрузки превью аватара при вводе URL
-        document.getElementById('edit-avatar-url').addEventListener('input', (e) => {
-            const url = e.target.value;
-            if (url) {
-                document.getElementById('profile-img-view').src = url;
+        // --- УДАЛЕНИЕ ТАЙТЛА ---
+        window.deleteTitle = async function(id) {
+            if(confirm("Вы уверены, что хотите удалить этот релиз?")) {
+                try {
+                    await deleteDoc(doc(db, "titles", id));
+                    loadAdminTitles();
+                    showToast("Тайтл удален", "error");
+                } catch (err) {
+                    alert("Ошибка при удалении");
+                }
             }
-        });
+        };
 
-        // --- ДИНАМИЧЕСКАЯ ЗАГРУЗКА РЕЛИЗОВ ---
-        window.loadReleases = async function() {
+        // --- ЗАГРУЗКА ПУБЛИЧНОГО КАТАЛОГА (Для всех) ---
+        window.loadPublicReleases = async function() {
             const container = document.getElementById('releases-container');
-            container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Загрузка релизов...</p>';
+            if(!container) return;
 
             try {
                 const querySnapshot = await getDocs(collection(db, "titles"));
-                container.innerHTML = ''; // Очистка
+                container.innerHTML = '';
 
                 if (querySnapshot.empty) {
-                    // Если база пуста, покажем заглушки для красоты
-                    for(let i=1; i<=6; i++) {
-                        container.innerHTML += generatePlaceholderCard(i);
-                    }
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        container.innerHTML += createReleaseCard(data);
-                    });
+                    container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                        <i class="fas fa-box-open" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1rem;"></i>
+                        <p style="color: var(--text-muted);">Релизов пока нет. Админ скоро их добавит!</p>
+                    </div>`;
+                    return;
                 }
-            } catch (error) {
-                console.error("Ошибка загрузки релизов:", error);
-                container.innerHTML = '<p style="grid-column: 1/-1; color: var(--error-color);">Не удалось загрузить данные.</p>';
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    container.innerHTML += `
+                        <div class="release-card">
+                            <span class="badge">${data.status === 'ongoing' ? 'В процессе' : 'Завершен'}</span>
+                            <img src="${data.poster}" class="release-poster" alt="${data.title}">
+                            <div class="release-info">
+                                <div style="font-weight: 800; font-size: 1.1rem; margin-bottom: 5px; color: var(--color-blue);">${data.title}</div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+                                    <span><i class="fas fa-layer-group"></i> ${data.episodes || 0} серий</span>
+                                    <span><i class="fas fa-microphone"></i> DUB</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                console.error("Ошибка публичного каталога:", err);
             }
         };
 
-        function createReleaseCard(data) {
-            return `
-                <div class="release-card">
-                    ${data.isNew ? '<span class="badge badge-new">NEW</span>' : ''}
-                    <img src="${data.poster || 'https://via.placeholder.com/300x450'}" class="release-poster" alt="${data.title}">
-                    <div class="release-info">
-                        <div class="release-title">${data.title}</div>
-                        <div class="release-meta">
-                            <span><i class="fas fa-layer-group"></i> ${data.series || '1'} серий</span>
-                            <span><i class="fas fa-check-circle"></i> ${data.status || 'В процессе'}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+        // --- ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК В АДМИНКЕ ---
+        window.switchAdminTab = function(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+            
+            const targetTab = document.getElementById(`adm-${tabName}`);
+            if(targetTab) targetTab.style.display = 'block';
+            
+            // Визуальный эффект нажатия
+            event.currentTarget.classList.add('active');
+        };
 
-        function generatePlaceholderCard(i) {
-            return `
-                <div class="release-card">
-                    <img src="https://via.placeholder.com/300x450?text=Title+${i}" class="release-poster">
-                    <div class="release-info">
-                        <div class="release-title">Пример тайтла ${i}</div>
-                        <div class="release-meta">
-                            <span><i class="fas fa-layer-group"></i> 12 эп.</span>
-                            <span><i class="fas fa-check-circle"></i> Завершен</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Запуск при загрузке
-        loadReleases();
-
-    </script>
-
-    <style>
-        .footer {
-            background: var(--color-blue);
-            color: var(--color-white);
-            padding: 4rem 2rem 2rem;
-            margin-top: 5rem;
-        }
-
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 3rem;
-        }
-
-        .footer-brand h3 {
-            color: var(--color-white);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-brand p {
-            color: rgba(255,255,255,0.7);
-            max-width: 300px;
-        }
-
-        .footer-links h4 {
-            color: var(--color-salad);
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--color-turquoise);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 2rem auto 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: rgba(255,255,255,0.5);
-            font-size: 0.85rem;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-btn {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-        }
-
-        .social-btn:hover {
-            background: var(--color-turquoise);
-            transform: scale(1.1);
-        }
-    </style>
-
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>Renascendi Voice</h3>
-                <p>Мы создаем профессиональную атмосферу через звук. Каждая деталь нашего нового сайта продумана для вашего удобства.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Навигация</h4>
-                <ul>
-                    <li><a href="#home" onclick="spaNavigate('home')">Главная</a></li>
-                    <li><a href="#releases" onclick="spaNavigate('releases')">Каталог релизов</a></li>
-                    <li><a href="#about">О нас</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Поддержка</h4>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Контакты</a></li>
-                    <li><a href="#">Сотрудничество</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Следите за нами</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-btn"><i class="fab fa-vk"></i></a>
-                    <a href="#" class="social-btn"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Renascendi Voice. Все права защищены.</p>
-            <p>Made with <i class="fas fa-heart" style="color: var(--color-salad);"></i> for fans.</p>
-        </div>
-    </footer>
-</body>
-</html>
-/* === ДОПОЛНИТЕЛЬНЫЕ СКРИПТЫ: УВЕДОМЛЕНИЯ И UI === */
-
-        // 1. Система кастомных уведомлений (Toast)
-        window.showToast = function(message, type = 'success') {
+        // --- СИСТЕМА УВЕДОМЛЕНИЙ (TOAST) ---
+        window.showToast = function(text, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            
-            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
-            
-            toast.innerHTML = `
-                <i class="fas ${icon}"></i>
-                <span>${message}</span>
-            `;
+            toast.className = 'toast';
+            if(type === 'error') toast.style.borderLeftColor = 'var(--error-color)';
+            toast.innerText = text;
             
             container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
             
-            // Анимация появления
-            setTimeout(() => toast.classList.add('show'), 10);
-            
-            // Удаление через 4 секунды
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 500);
-            }, 4000);
+            }, 3000);
+        };
+        // --- УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ (ADMIN) ---
+        window.loadAdminUsers = async function() {
+            const tbody = document.getElementById('users-table-body');
+            if(!tbody) return;
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                tbody.innerHTML = '';
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const id = docSnap.id;
+                    const isUserAdmin = data.role === 'admin';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="width: 35px; height: 35px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--color-blue);">
+                                        ${(data.nickname || 'U').charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 700;">${data.nickname || 'Без имени'}</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">${data.email}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge ${isUserAdmin ? 'badge-success' : ''}" style="background: ${isUserAdmin ? '#dbeafe' : '#f1f5f9'}; color: ${isUserAdmin ? '#1e40af' : '#64748b'};">
+                                ${data.role || 'user'}
+                            </span></td>
+                            <td>${data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '—'}</td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn-icon" onclick="toggleUserRole('${id}', '${data.role}')" title="Изменить роль">
+                                        <i class="fas fa-user-shield"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="deleteUser('${id}')" title="Удалить"><i class="fas fa-user-minus"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error("Ошибка загрузки пользователей:", err);
+            }
         };
 
-        // 2. Мобильное меню (Burger)
-        window.toggleMobileMenu = function() {
-            const nav = document.getElementById('main-nav');
-            nav.classList.toggle('mobile-open');
+        window.toggleUserRole = async function(uid, currentRole) {
+            if(!confirm("Изменить права доступа для этого пользователя?")) return;
+            const newRole = currentRole === 'admin' ? 'user' : 'admin';
+            try {
+                await updateDoc(doc(db, "users", uid), { role: newRole });
+                showToast(`Роль изменена на ${newRole}`);
+                loadAdminUsers();
+            } catch (e) { alert("Ошибка прав доступа"); }
         };
 
-        // 3. Прелоадер
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('preloader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }, 1000);
-        });
+        // --- ЛИЧНЫЙ КАБИНЕТ (PROFILE) ---
+        window.loadUserProfile = async function() {
+            if(!currentUser) return;
+            try {
+                const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+                const data = userDoc.data();
 
-        // 4. Валидация форм (пример для регистрации)
-        function validateForm(data) {
-            if (data.pass.length < 6) {
-                showToast("Пароль слишком короткий!", "error");
-                return false;
+                // Заполняем поля в UI профиля
+                document.getElementById('profile-display-name').innerText = data.nickname || "Пользователь";
+                document.getElementById('profile-email-text').innerText = data.email;
+                document.getElementById('profile-role-badge').innerText = data.role === 'admin' ? 'Администратор' : 'Зритель';
+                
+                // Если есть аватар в базе
+                if(data.avatar) {
+                    document.getElementById('profile-img-main').src = data.avatar;
+                }
+            } catch (err) {
+                console.size("Ошибка профиля:", err);
             }
-            if (!data.email.includes('@')) {
-                showToast("Некорректный Email!", "error");
-                return false;
-            }
-            return true;
-        }
+        };
 
-        // 5. Обработка скролла (эффект для шапки)
+        // --- СТАТИСТИКА (ГРАФИКИ - ЗАГЛУШКА) ---
+        window.initAdminStats = function() {
+            const ctx = document.getElementById('stats-chart');
+            if(!ctx) return;
+            // Здесь можно подключить Chart.js для отрисовки реальных графиков активности
+            console.log("Статистика инициализирована");
+        };
+
+        // Добавляем в switchAdminTab вызов загрузки пользователей
+        const originalSwitchTab = window.switchAdminTab;
+        window.switchAdminTab = function(tabName) {
+            if(tabName === 'users') loadAdminUsers();
+            if(tabName === 'stats') initAdminStats();
+            // Вызываем оригинальную функцию переключения
+            document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+            const targetTab = document.getElementById(`adm-${tabName}`);
+            if(targetTab) targetTab.style.display = 'block';
+            event.currentTarget.classList.add('active');
+        };
+        <div id="adm-users" class="admin-tab" style="display:none;">
+    <div style="margin-bottom: 2rem;">
+        <h2>Управление сообществом</h2>
+        <p style="color: var(--text-muted);">Список всех зарегистрированных пользователей и управление их ролями.</p>
+    </div>
+    <div class="admin-card">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Роль</th>
+                        <th>Дата регистрации</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="adm-stats" class="admin-tab" style="display:none;">
+    <h2>Аналитика системы</h2>
+    <div class="admin-card" style="margin-top: 1rem; height: 300px; display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center; color: var(--text-muted);">
+            <i class="fas fa-chart-area" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.2;"></i>
+            <p>Модуль графиков Chart.js готов к подключению...</p>
+        </div>
+    </div>
+</div>
+        // --- СИСТЕМА КОММЕНТАРИЕВ ---
+        window.loadComments = async function(titleId) {
+            const container = document.getElementById('comments-list');
+            if(!container) return;
+            
+            try {
+                const q = query(collection(db, "comments"), where("titleId", "==", titleId), orderBy("createdAt", "desc"));
+                const snap = await getDocs(q);
+                container.innerHTML = snap.empty ? '<p style="color:var(--text-muted)">Будьте первым, кто оставит отзыв!</p>' : '';
+                
+                snap.forEach(docSnap => {
+                    const c = docSnap.data();
+                    container.innerHTML += `
+                        <div style="background: var(--bg-main); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border: 1px solid var(--border-color);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <strong style="color: var(--color-blue);">${c.userName}</strong>
+                                <small style="color: var(--text-muted);">${new Date(c.createdAt).toLocaleDateString()}</small>
+                            </div>
+                            <p style="font-size: 0.95rem;">${c.text}</p>
+                        </div>
+                    `;
+                });
+            } catch (e) { console.error("Ошибка комментариев", e); }
+        };
+
+        window.postComment = async function() {
+            if(!currentUser) return openModal('auth-modal');
+            const text = document.getElementById('comment-input').value;
+            if(!text.trim()) return;
+
+            const btn = event.target;
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "comments"), {
+                    titleId: currentActiveTitleId || 'general', // ID текущего тайтла
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName || currentUser.email.split('@')[0],
+                    text: text,
+                    createdAt: new Date().getTime()
+                });
+                document.getElementById('comment-input').value = '';
+                showToast("Комментарий опубликован!");
+                loadComments(currentActiveTitleId || 'general');
+            } catch (e) { alert("Ошибка при отправке"); }
+            finally { btn.disabled = false; }
+        };
+
+        // --- ЖИВОЙ ПОИСК ---
+        window.initSearch = function() {
+            const searchInput = document.getElementById('search-titles');
+            if(!searchInput) return;
+
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.release-card');
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('h4, .release-info div').innerText.toLowerCase();
+                    card.style.display = title.includes(term) ? 'block' : 'none';
+                });
+            });
+        };
+
+        // --- ДОПОЛНИТЕЛЬНЫЕ ИСПРАВЛЕНИЯ UI ---
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.header');
-            if (window.scrollY > 50) {
-                header.style.padding = '0.5rem 0';
-                header.style.boxShadow = 'var(--shadow-lg)';
+            if (window.scrollY > 20) {
+                header.style.boxShadow = 'var(--shadow-md)';
+                header.style.padding = '0.4rem 0';
             } else {
-                header.style.padding = '1rem 0';
                 header.style.boxShadow = 'none';
+                header.style.padding = '0.8rem 0';
             }
         });
 
-        // Инициализация при запуске
+        // Инициализация при загрузке всех скриптов
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("Renascendi Voice Engine Initialized...");
-            
-            // Проверка хеша в URL для роутинга
-            const currentHash = window.location.hash.replace('#', '');
-            if (currentHash) {
-                spaNavigate(currentHash);
-            }
+            initSearch();
         });
-    </script>
-
-    <style>
-        /* Toast Container */
-        #toast-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .toast {
-            background: var(--color-white);
-            color: var(--text-main);
-            padding: 16px 24px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transform: translateX(120%);
-            transition: var(--transition);
-            border-left: 5px solid var(--color-turquoise);
-            min-width: 300px;
-        }
-
-        .toast.show { transform: translateX(0); }
-        .toast-success { border-left-color: var(--color-salad); }
-        .toast-error { border-left-color: var(--error-color); }
-        .toast i { font-size: 1.2rem; }
-
-        /* Preloader */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--color-white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--border-color);
-            border-top-color: var(--color-turquoise);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* АДАПТИВНОСТЬ (MEDIA QUERIES) */
-        @media (max-width: 1024px) {
-            .hero { flex-direction: column; text-align: center; }
-            .hero-text h1 { font-size: 2.5rem; }
-            .hero-image { order: -1; }
-            .hero-circle { width: 300px; height: 300px; }
-            .profile-layout { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Для реализации мобильного меню-гамбургера */
-            }
-            .nav-container { padding: 1rem; }
-            .logo-wrapper { font-size: 1.2rem; }
-            .btn { padding: 8px 16px; font-size: 0.9rem; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .settings-grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-        }
-
-        /* Улучшения для форм */
-        .form-input::placeholder { color: #cbd5e1; }
-        
-        /* Скроллбар */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-main); }
-        ::-webkit-scrollbar-thumb { 
-            background: var(--color-blue-light); 
-            border-radius: 10px; 
-        }
-        ::-webkit-scrollbar-thumb:hover { background: var(--color-turquoise); }
-    </style>
-
-    <div id="preloader">
-        <div class="loader-spinner"></div>
+        <section id="p-releases" class="page">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+        <h2>Каталог релизов</h2>
+        <div style="position: relative; width: 100%; max-width: 400px;">
+            <i class="fas fa-search" style="position: absolute; left: 15px; top: 13px; color: var(--text-muted);"></i>
+            <input type="text" id="search-titles" class="input" placeholder="Поиск по названию..." style="padding-left: 45px;">
+        </div>
     </div>
-
-    <div id="toast-container"></div>
-
-    <button id="scrollToTop" title="Наверх" style="
-        position: fixed;
-        bottom: 30px;
-        left: 30px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--color-blue);
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: none;
-        z-index: 900;
-        box-shadow: var(--shadow-lg);
-        transition: var(--transition);
-    " onclick="window.scrollTo(0,0)">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <script>
-        // Показ кнопки "Наверх"
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('scrollToTop');
-            btn.style.display = window.scrollY > 400 ? 'block' : 'none';
-        });
-    </script>
-</body>
-</html>
+    <div class="releases-grid" id="releases-container">
+        </div>
+</section>
