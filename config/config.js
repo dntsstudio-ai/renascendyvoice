@@ -1,5 +1,5 @@
 // ============================================================
-//  config/config.js — Все ключи и настройки Renascendi Voice
+//  config/config.js — Renascendi Voice
 // ============================================================
 
 export const FIREBASE_CONFIG = {
@@ -18,17 +18,17 @@ export const EMAILJS_CONFIG = {
 };
 
 export const SOCIAL_LINKS = {
-    vk:       'http://vk.com/renascendivoice',
-    telegram: 'https://t.me/renascendivoice',
-    youtube:  'http://youtube.com/@RenascendiVoiceCLUB2193'
+    vk:       'https://vk.ru/soundwavestudiosws',
+    telegram: 'https://t.me/soundwavestudiosws',
+    youtube:  'https://www.youtube.com/@SoundWaveDUB'
 };
 
-export const JOIN_FORM_URL        = 'https://t.me/@mlfyessss';
-export const PLACEHOLDER_IMG      = 'https://via.placeholder.com/300x400/141417/ff2e2e?text=SWS';
+export const JOIN_FORM_URL        = 'https://forms.gle/YOUR_GOOGLE_FORM_ID';
+export const PLACEHOLDER_IMG      = 'https://placehold.co/300x420/0a1a26/22c55e?text=RV';
 export const PLACEHOLDER_TEAM_IMG = 'https://api.dicebear.com/7.x/identicon/svg';
 
 // Просмотр засчитывается после N минут на странице релиза
-export const VIEW_COUNT_AFTER_MS = 10 * 60 * 1000; // 10 минут
+export const VIEW_COUNT_AFTER_MS = 10 * 60 * 1000;
 
 // Базовые ачивки — выдаются автоматически
 export const AUTO_ACHIEVEMENTS = [
