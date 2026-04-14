@@ -18,12 +18,12 @@ export const EMAILJS_CONFIG = {
 };
 
 export const SOCIAL_LINKS = {
-    vk:       'https://vk.ru/soundwavestudiosws',
-    telegram: 'https://t.me/soundwavestudiosws',
-    youtube:  'https://www.youtube.com/@SoundWaveDUB'
+    vk:       'http://vk.com/renascendivoice',
+    telegram: 'https://t.me/renascendivoice',
+    youtube:  'http://youtube.com/@RenascendiVoiceCLUB2193'
 };
 
-export const JOIN_FORM_URL        = 'https://forms.gle/YOUR_GOOGLE_FORM_ID';
+export const JOIN_FORM_URL        = 'https://t.me/@mlfyessss';
 export const PLACEHOLDER_IMG      = 'https://via.placeholder.com/300x400/141417/ff2e2e?text=SWS';
 export const PLACEHOLDER_TEAM_IMG = 'https://api.dicebear.com/7.x/identicon/svg';
 
