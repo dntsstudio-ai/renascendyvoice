@@ -3,12 +3,12 @@
 // ============================================================
 
 export const FIREBASE_CONFIG = {
-    apiKey:            "AIzaSyD34TTNdG1V4SZmuQ1ULVdo3iBB3q-7pC8",
-    authDomain:        "my-dub-site.firebaseapp.com",
-    projectId:         "my-dub-site",
-    storageBucket:     "my-dub-site.firebasestorage.app",
-    messagingSenderId: "302896869866",
-    appId:             "1:302896869866:web:a003a8f24d682cb3ac0293"
+    apiKey:            "AIzaSyCdE_m9VjxC8Qpemep0B1rLf7kzu2np6QA",
+    authDomain:        "renascendi-voice.firebaseapp.com",
+    projectId:         "renascendi-voice",
+    storageBucket:     "renascendi-voice.firebasestorage.app",
+    messagingSenderId: "1007789934185",
+    appId:             "1:1007789934185:web:94d495c8512270700084f8"
 };
 
 export const EMAILJS_CONFIG = {
