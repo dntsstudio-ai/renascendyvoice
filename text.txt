@@ -1,72 +1,9 @@
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    
-    // ПОЛЬЗОВАТЕЛИ
-    match /users/{userId} {
-      allow read: if true;
-      // Пользователь может менять свой профиль полностью. 
-      // ДРУГИЕ пользователи могут менять ТОЛЬКО поля подписчиков (для работы кнопки "Подписаться")
-      allow write: if request.auth != null && (
-        request.auth.uid == userId ||
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['subscribers', 'subscribersList'])
-      );
-    }
-    
-    // КОММЕНТАРИИ (Глобальные)
-    match /comments/{commentId} {
-      allow read: if true;
-      allow create: if request.auth != null;
-      allow update, delete: if request.auth != null && (
-        request.auth.uid == resource.data.userId || 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-    }
-    
-    // ПРОЕКТЫ (РЕЛИЗЫ)
-    match /projects/{projId} {
-      allow read: if true;
-      allow create, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-      
-      // Разрешаем обычным юзерам обновлять счетчик комментов, просмотры, лайки и дизлайки
-      allow update: if request.auth != null && (
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' || 
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commCount', 'views', 'likes', 'dislikes'])
-      );
-    }
-
-    // КОЛЛЕКЦИЯ RELEASES (если часть кода перешла на нее)
-    match /releases/{relId} {
-      allow read: if true;
-      allow create, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-      allow update: if request.auth != null && (
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' || 
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commCount', 'views', 'likes', 'dislikes'])
-      );
-    }
-
-    // ВЛОЖЕННЫЕ КОММЕНТАРИИ В РЕЛИЗАХ
-    match /releases/{relId}/comments/{commentId} {
-      allow read: if true;
-      allow create: if request.auth != null;
-      allow update, delete: if request.auth != null && (
-        request.auth.uid == resource.data.uid || 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-    }
-
-    // DUB-IN (ЗАКРЫТЫЙ РАЗДЕЛ ДЛЯ ДАБЕРОВ)
-    match /dubin/{docId} {
-      allow read, write: if request.auth != null && (
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dub' || 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-    }
-
-    // ОСТАЛЬНЫЕ КОЛЛЕКЦИИ (Команда, страницы команды, настройки)
-    match /{document=**} {
-      allow read: if true;
-      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-    }
-  }
+match /users/{userId} {
+  allow read: if true;
+  allow create: if request.auth != null && request.auth.uid == userId;
+  allow update: if request.auth != null && (
+    request.auth.uid == userId ||
+    request.resource.data.diff(resource.data).affectedKeys().hasOnly(['subscribers', 'subscribersList'])
+  );
+  allow delete: if request.auth != null && request.auth.uid == userId;
 }
