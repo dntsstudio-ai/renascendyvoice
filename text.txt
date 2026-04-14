@@ -1,6 +1,8 @@
-renascendyvoice/:9 X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.
-renascendyvoice/:774 Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.
-order.js:166 Uncaught SyntaxError: Invalid or unexpected token
-renascendyvoice/:37 Uncaught ReferenceError: navigate is not defined
-    at HTMLAnchorElement.onclick (renascendyvoice/:37:78)
-renascendyvoice/:1 Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com https://www.googletagmanager.com https://cdn.emailjs.com https://smtpjs.com https://cdnjs.cloudflare.com;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+    font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;
+    ...
+">
+
