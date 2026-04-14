@@ -6,12 +6,11 @@
     <!-- Security headers via meta -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com https://www.googletagmanager.com https://cdn.emailjs.com https://smtpjs.com https://cdnjs.cloudflare.com;
-        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
-        font-src 'self' https://cdnjs.cloudflare.com;
+        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+        font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;
         img-src 'self' data: blob: https: http:;
         frame-src https://www.youtube.com https://drive.google.com https://youtube.com;
         connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://api.emailjs.com wss://*.firebaseio.com;
@@ -53,7 +52,6 @@
     <!-- ==================== ГЛАВНАЯ / РЕЛИЗЫ ==================== -->
     <section id="home" class="section active">
         <div class="search-bar">
-            <!-- Поиск: кнопка-триггер + анимированное поле -->
             <div class="search-wrap" id="search-wrap">
                 <button class="search-open-btn" id="search-open-btn"
                         onclick="openSearch()" title="Поиск">
@@ -128,9 +126,7 @@
     <!-- ==================== ПРОСМОТР РЕЛИЗА ==================== -->
     <section id="view" class="section">
         <button class="btn btn-outline" onclick="navigate('home')" style="margin-bottom:20px;">← К релизам</button>
-        <!-- Контент рендерится динамически через releases.js -->
         <div id="v-info"></div>
-        <!-- Комментарии -->
         <div style="background:var(--card-bg);padding:22px;border-radius:16px;border:1px solid var(--border);margin-top:20px;">
             <h4 style="margin-bottom:15px;font-size:1.1rem;">Комментарии (<span id="comm-count">0</span>)</h4>
             <div id="comm-auth-msg" class="unauth-msg">
@@ -147,7 +143,6 @@
 
     <!-- ==================== ПРОФИЛЬ ==================== -->
     <section id="profile" class="section">
-        <!-- Форма входа -->
         <div id="auth-ui" style="max-width:360px;margin:40px auto;">
             <div style="background:var(--card-bg);padding:36px;border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);">
                 <div style="text-align:center;margin-bottom:28px;">
@@ -172,7 +167,6 @@
             </div>
         </div>
 
-        <!-- Авторизованный пользователь -->
         <div id="user-ui">
             <div class="profile-header">
                 <div style="position:relative;">
@@ -196,19 +190,16 @@
                 </div>
             </div>
 
-            <!-- Достижения -->
             <div style="background:var(--card-bg);padding:22px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px;">
                 <h4 style="font-size:15px;margin-bottom:14px;">Мои достижения</h4>
                 <div id="u-ach" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
             </div>
 
-            <!-- Мои списки -->
             <div style="background:var(--card-bg);padding:22px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px;">
                 <h4 style="font-size:15px;margin-bottom:18px;"><i class="fas fa-bookmark" style="color:var(--accent);margin-right:6px;"></i> Мои списки</h4>
                 <div id="my-lists-wrap"><p style="font-size:13px;color:var(--text-dim);">Загрузка...</p></div>
             </div>
 
-            <!-- Панель администратора -->
             <div id="adm-ach-panel" style="display:none;background:rgba(56,151,240,0.06);padding:22px;border-radius:16px;border:1px dashed rgba(56,151,240,0.3);margin-bottom:20px;">
                 <p style="font-size:11px;color:var(--admin);margin-bottom:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;">Панель администратора</p>
                 <button class="btn btn-blue" onclick="document.getElementById('m-give-ach').style.display='flex'"><i class="fas fa-award"></i> Выдать ачивку</button>
@@ -303,7 +294,6 @@
             <p>Хотите, чтобы мы озвучили ваш любимый проект? Выберите тип предложения.</p>
         </div>
 
-        <!-- Выбор типа -->
         <div class="order-type-grid" id="order-type-grid">
             <div class="order-type-card" onclick="selectOrderType('free')">
                 <div class="order-type-icon" style="background:rgba(34,197,94,0.12);border-color:rgba(34,197,94,0.3);">
@@ -327,7 +317,6 @@
             </div>
         </div>
 
-        <!-- Форма БЕСПЛАТНОГО предложения -->
         <div id="order-free-form" class="order-form-wrap" style="display:none;">
             <div class="order-form-header">
                 <button class="btn btn-outline btn-sm" onclick="backToOrderType()">← Назад</button>
@@ -377,7 +366,6 @@
             </div>
         </div>
 
-        <!-- Форма ПЛАТНОГО заказа -->
         <div id="order-paid-form" class="order-form-wrap" style="display:none;">
             <div class="order-form-header">
                 <button class="btn btn-outline btn-sm" onclick="backToOrderType()">← Назад</button>
@@ -392,7 +380,6 @@
                     </div>
                 </div>
 
-                <!-- Поля -->
                 <div class="order-field-group">
                     <label class="order-label">Название проекта *</label>
                     <input type="text" id="ord-paid-title" placeholder="Полное название">
@@ -457,7 +444,6 @@
                     <textarea id="ord-paid-notes" rows="3" placeholder="Особые требования, сроки, что важно..."></textarea>
                 </div>
 
-                <!-- Расчёт цены -->
                 <div class="order-price-block" id="order-price-block">
                     <div class="order-price-label">Ориентировочная стоимость</div>
                     <div class="order-price-value" id="order-price-value">— ₽</div>
@@ -477,7 +463,6 @@
 <footer class="footer-main">
     <div class="footer-wave"></div>
     <div class="footer-inner" style="margin-top:0;padding-top:48px;">
-        <!-- Бренд -->
         <div class="footer-brand">
             <span class="logo">RENASCENDI<span class="logo-accent"> VOICE</span></span>
             <p>Студия фандаба, которая создаёт качественный дубляж и озвучку аниме, сериалов, фильмов и мультфильмов. Всё — с душой и для фанатов.</p>
@@ -487,7 +472,6 @@
                 <a href="https://www.youtube.com/@SoundWaveDUB" target="_blank" class="footer-social-btn"><i class="fab fa-youtube"></i></a>
             </div>
         </div>
-        <!-- Навигация -->
         <div class="footer-col">
             <h5>Сайт</h5>
             <span onclick="navigate('home')">Релизы</span>
@@ -495,7 +479,6 @@
             <span onclick="navigate('profile')">Профиль</span>
             <span onclick="openPrivacy()">Политика конфиденциальности</span>
         </div>
-        <!-- Студия -->
         <div class="footer-col">
             <h5>Студия</h5>
             <a href="https://vk.ru/soundwavestudiosws" target="_blank">ВКонтакте</a>
@@ -503,7 +486,6 @@
             <a href="https://www.youtube.com/@SoundWaveDUB" target="_blank">YouTube</a>
             <a href="/cdn-cgi/l/email-protection#f5869a809b9182948390868180919c9a868286b59298949c99db969a98">Написать нам</a>
         </div>
-        <!-- Вступить -->
         <div class="footer-col">
             <h5>Хочешь с нами?</h5>
             <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px;line-height:1.6;">Мы всегда рады новым актёрам дубляжа, редакторам и энтузиастам!</p>
@@ -657,7 +639,7 @@
     <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="closeModals()">Отмена</button>
 </div></div>
 
-<!-- Управление ролями — ОБНОВЛЕНО -->
+<!-- Управление ролями -->
 <div id="m-role" class="modal"><div class="modal-content" style="max-width:500px;">
     <h3 style="margin-bottom:6px;color:var(--admin);"><i class="fas fa-user-shield"></i> Управление ролями</h3>
     <p style="font-size:12px;color:var(--text-dim);margin-bottom:18px;">
@@ -785,40 +767,6 @@
     <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="closeModals()">Отмена</button>
 </div></div>
 
-
-<!-- Создать / редактировать плейлист -->
-<div id="m-playlist-edit" class="modal"><div class="modal-content" style="max-width:480px;">
-    <h3 id="pl-modal-title" style="margin-bottom:18px;font-size:1.2rem;color:var(--accent);">Новый плейлист</h3>
-    <input type="hidden" id="pl-edit-id">
-    <label style="font-size:11px;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Название *</label>
-    <input type="text" id="pl-edit-name" placeholder="Например: Любимое аниме">
-    <label style="font-size:11px;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Описание</label>
-    <textarea id="pl-edit-desc" rows="3" placeholder="Короткое описание плейлиста..."></textarea>
-    <label style="font-size:11px;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Обложка (URL)</label>
-    <input type="text" id="pl-edit-img" placeholder="https://..." oninput="updatePlaylistImgPreview(this.value)">
-    <img id="pl-img-preview" style="display:none;width:80px;height:110px;border-radius:8px;object-fit:cover;margin-bottom:12px;border:1px solid var(--border);" src="" alt="">
-    <button class="btn" style="width:100%;margin-top:4px;" onclick="savePlaylist()"><i class="fas fa-save"></i> Сохранить</button>
-    <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="closeModals()">Отмена</button>
-</div></div>
-
-<!-- Добавить релиз в плейлист -->
-<div id="m-add-to-playlist" class="modal"><div class="modal-content" style="max-width:420px;">
-    <h3 style="margin-bottom:6px;font-size:1.1rem;color:var(--accent);">
-        <i class="fas fa-layer-group"></i> Добавить в плейлист
-    </h3>
-    <input type="hidden" id="atp-rel-id">
-    <input type="hidden" id="atp-rel-title">
-    <input type="hidden" id="atp-rel-img">
-    <div id="atp-list" style="max-height:320px;overflow-y:auto;margin:14px 0;display:flex;flex-direction:column;gap:8px;"></div>
-    <button class="btn btn-outline" style="width:100%;" onclick="openPlaylistModal()">
-        <i class="fas fa-plus"></i> Создать новый плейлист
-    </button>
-    <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="closeModals()">Закрыть</button>
-</div></div>
-
-<!-- ==================== СКРИПТЫ ==================== -->
-
-
 <!-- Создать / редактировать плейлист -->
 <div id="m-playlist-edit" class="modal"><div class="modal-content" style="max-width:480px;">
     <h3 id="pl-modal-title" style="margin-bottom:18px;font-size:1.2rem;color:var(--accent);">Новый плейлист</h3>
@@ -852,7 +800,6 @@
 <!-- ==================== СКРИПТЫ ==================== -->
 <script type="module" src="js/app.js"></script>
 
-
 <!-- Animated Background -->
 <canvas id="bg-canvas"></canvas>
 <script>
@@ -862,38 +809,22 @@
     const ctx = canvas.getContext('2d');
     let W, H;
     const COLORS = ['rgba(34,197,94,', 'rgba(59,130,246,', 'rgba(14,165,233,', 'rgba(255,255,255,'];
-
     function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
     window.addEventListener('resize', resize); resize();
-
     class Particle {
-        constructor(){
-            this.reset();
-        }
-        reset(){
-            this.x = Math.random()*W; this.y = Math.random()*H;
-            this.vx = (Math.random()-0.5)*0.4; this.vy = (Math.random()-0.5)*0.4;
-            this.r = Math.random()*2+0.5;
-            this.col = COLORS[Math.floor(Math.random()*COLORS.length)];
-            this.life = Math.random()*0.5+0.08;
-        }
-        update(){ this.x+=this.vx; this.y+=this.vy;
-            if(this.x<0||this.x>W) this.vx*=-1;
-            if(this.y<0||this.y>H) this.vy*=-1; }
-        draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-            ctx.fillStyle=this.col+this.life+')'; ctx.fill(); }
+        constructor(){ this.reset(); }
+        reset(){ this.x = Math.random()*W; this.y = Math.random()*H; this.vx = (Math.random()-0.5)*0.4; this.vy = (Math.random()-0.5)*0.4; this.r = Math.random()*2+0.5; this.col = COLORS[Math.floor(Math.random()*COLORS.length)]; this.life = Math.random()*0.5+0.08; }
+        update(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>W) this.vx*=-1; if(this.y<0||this.y>H) this.vy*=-1; }
+        draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=this.col+this.life+')'; ctx.fill(); }
     }
-
     const particles = [];
     for(let i=0;i<80;i++) particles.push(new Particle());
-
     const orbs = [
         {x:0.15,y:0.2,r:180,col:'rgba(34,197,94,0.04)',t:0},
         {x:0.85,y:0.7,r:220,col:'rgba(59,130,246,0.05)',t:1.5},
         {x:0.5, y:0.5,r:280,col:'rgba(14,165,233,0.03)',t:3},
     ];
     let t=0;
-
     function drawLines(){
         for(let i=0;i<particles.length;i++){
             for(let j=i+1;j<particles.length;j++){
@@ -909,7 +840,6 @@
             }
         }
     }
-
     function animate(){
         ctx.clearRect(0,0,W,H);
         t+=0.004;
@@ -930,7 +860,6 @@
 </script>
 
 <script>
-// Ripple on buttons, cards, nav
 document.addEventListener('click', function(e) {
     const btn = e.target.closest('.btn, .card, .nav-link, .order-type-card');
     if (!btn) return;
@@ -949,6 +878,5 @@ document.addEventListener('click', function(e) {
 .ripple-fx{position:absolute;border-radius:50%;background:rgba(34,197,94,0.22);pointer-events:none;transform:scale(0);animation:rippleAnim .6s linear forwards;z-index:999;}
 @keyframes rippleAnim{to{transform:scale(1);opacity:0;}}
 </style>
-
 </body>
 </html>
