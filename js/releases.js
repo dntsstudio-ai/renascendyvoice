@@ -27,12 +27,12 @@ let viewTimer      = null;
 let playerSettings = { autoSkip: false, autoNext: false };
 let currentEpIdx   = 0;
 let introTimers    = [];
-let searchEnabled  = false;   // поиск выключен до нажатия кнопки
+let searchEnabled  = false;
 
 const MAIN_ID    = 'sws-main-player';
 const TRAILER_ID = 'sws-trailer-player';
 
-// ── Загрузка релизов ──
+// Загрузка релизов
 export async function loadReleases(db, isAdmin) {
     const snap = await getDocs(query(collection(db,'releases'), orderBy('timestamp','desc')));
     allRel = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -41,7 +41,6 @@ export async function loadReleases(db, isAdmin) {
 
 export function renderGrid(isAdmin) {
     let res = [...allRel];
-    // Поиск работает ТОЛЬКО когда searchEnabled=true
     if (searchEnabled) {
         const q = (document.getElementById('main-search')?.value || '').toLowerCase();
         if (q) res = res.filter(r => r.title?.toLowerCase().includes(q));
@@ -68,16 +67,13 @@ export function renderGrid(isAdmin) {
         </div>`).join('');
 }
 
-// ── Включить поиск (вызывается из core.js при открытии) ──
 export function enableSearch() { searchEnabled = true; }
 export function disableSearch() {
     searchEnabled = false;
-    // Сбросить поле и перерендерить
     const inp = document.getElementById('main-search');
     if (inp) inp.value = '';
 }
 
-// ── Открытие страницы релиза ──
 export async function openViewRelease(db, auth, id, userData, isAdmin) {
     clearTimeout(viewTimer);
     introTimers.forEach(t => clearTimeout(t));
@@ -90,7 +86,6 @@ export async function openViewRelease(db, auth, id, userData, isAdmin) {
     if (idx >= 0) allRel[idx] = curProj;
     navigate('view');
 
-    // Сохранение последней серии
     let watchedEpIdx = 0;
     if (userData) {
         try {
@@ -122,7 +117,6 @@ export async function openViewRelease(db, auth, id, userData, isAdmin) {
     renderViewPage(db, auth, userData, isAdmin, watchedEpIdx);
 }
 
-// ── Рендер страницы релиза ──
 function renderViewPage(db, auth, userData, isAdmin, startEpIdx = 0) {
     const eps     = curProj.episodes || [];
     const trailer = eps.find(e => e.type === 'trailer');
@@ -137,7 +131,7 @@ function renderViewPage(db, auth, userData, isAdmin, startEpIdx = 0) {
             <button class="btn btn-outline btn-sm" id="btn-favorite" onclick="toggleWatchList('favorite')">
                 <i class="fas fa-star"></i> Избранное
             </button>
-            <button class="btn btn-outline btn-sm" id="btn-add-playlist" onclick="openAddToPlaylist('${curProj.id}','${curProj.title?.replace(/'/g,\"\\'\")}','${curProj.img?.replace(/'/g,\"\\'\")}')">
+            <button class="btn btn-outline btn-sm" id="btn-add-playlist" onclick="openAddToPlaylist('${curProj.id}','${curProj.title?.replace(/'/g,"\\'")}','${curProj.img?.replace(/'/g,"\\'")}')">
                 <i class="fas fa-layer-group"></i> В плейлист
             </button>
         </div>` : '';
@@ -191,7 +185,6 @@ function renderViewPage(db, auth, userData, isAdmin, startEpIdx = 0) {
                 </div>` : `
                 <div class="sws-player-container" id="${MAIN_ID}"></div>`}
 
-                <!-- Панель серий под плеером -->
                 ${series.length > 1 ? `
                 <div class="ep-panel-outer">
                     <div class="ep-panel-toggle" onclick="toggleEpPanel()">
@@ -209,7 +202,6 @@ function renderViewPage(db, auth, userData, isAdmin, startEpIdx = 0) {
 
     updateLikesUI(auth, userData);
 
-    // Инит трейлера
     if (trailer?.url) {
         initPlayer(TRAILER_ID, {
             url:       trailer.url,
@@ -219,7 +211,6 @@ function renderViewPage(db, auth, userData, isAdmin, startEpIdx = 0) {
         });
     }
 
-    // Инит основного плеера
     if (series.length > 0) {
         const firstEp = series[startEpIdx];
         initPlayer(MAIN_ID, {
@@ -239,7 +230,6 @@ function renderViewPage(db, auth, userData, isAdmin, startEpIdx = 0) {
     loadComments(db, auth, curProj, userData, isAdmin);
 }
 
-// ── Панель серий под плеером ──
 window.toggleEpPanel = () => {
     const scroll = document.getElementById('ep-panel-scroll');
     const chev   = document.getElementById('ep-panel-chev');
@@ -259,7 +249,6 @@ function renderEpPanelBtns(series) {
         </button>`).join('');
 }
 
-// ── Сетка эпизодов ──
 function renderEpGrid(series, isAdmin) {
     const globalIndices = series.map(ep =>
         (curProj.episodes||[]).findIndex(e =>
@@ -291,8 +280,6 @@ function renderEpGrid(series, isAdmin) {
         </div>`).join('');
 }
 
-// ── Тайминги заставок ──
-// Поля хранятся в секундах, но в форме указываются в формате мм:сс
 function scheduleIntroTimers(series, idx) {
     introTimers.forEach(t => clearTimeout(t));
     introTimers = [];
@@ -300,7 +287,6 @@ function scheduleIntroTimers(series, idx) {
     const ep = series[idx];
     if (!ep) return;
 
-    // introStart — начало заставки (уже в секундах после сохранения через saveEp)
     if (ep.introStart && ep.introStart > 0) {
         const t1 = setTimeout(() => {
             if (currentEpIdx !== idx) return;
@@ -317,7 +303,6 @@ function scheduleIntroTimers(series, idx) {
         introTimers.push(t1);
     }
 
-    // outroStart — появление кнопки «Следующая серия»
     if (ep.outroStart && ep.outroStart > 0) {
         const t3 = setTimeout(() => {
             if (currentEpIdx !== idx) return;
@@ -329,7 +314,6 @@ function scheduleIntroTimers(series, idx) {
     }
 }
 
-// ── Воспроизвести эпизод ──
 function playEp(series, idx, isAdmin) {
     if (!series[idx]) return;
     introTimers.forEach(t => clearTimeout(t));
@@ -390,12 +374,7 @@ async function loadWatchListStatus(db, auth, relId) {
     } catch(e) {}
 }
 
-// ═══════════════════════════════════════════════════
-//  BIND
-// ═══════════════════════════════════════════════════
 export function bindReleases(db, auth, getState) {
-
-    // Поиск — только когда включён
     window.filterData = () => { const { isAdmin } = getState(); renderGrid(isAdmin); };
 
     window.openView = async (id) => {
@@ -478,7 +457,6 @@ export function bindReleases(db, auth, getState) {
         set('ad-ep-title',       ep.title);
         set('ad-ep-url',         ep.url);
         set('ad-ep-thumb',       ep.thumb);
-        // Тайминги показываем в формате мм:сс
         const toMM = (sec) => {
             if (!sec) return '';
             const m = Math.floor(sec / 60);
@@ -500,7 +478,6 @@ export function bindReleases(db, auth, getState) {
         const editIdx = (editIdxEl?.value !== '' && editIdxEl?.value !== undefined)
             ? parseInt(editIdxEl.value) : -1;
 
-        // Конвертируем мм:сс → секунды
         const introStartRaw = document.getElementById('ad-ep-intro-start')?.value || '';
         const introDurRaw   = document.getElementById('ad-ep-intro-dur')?.value   || '';
         const outroStartRaw = document.getElementById('ad-ep-outro-start')?.value || '';
@@ -681,7 +658,6 @@ export function bindReleases(db, auth, getState) {
                     <div style="flex:1;min-width:0;"><div class="viewed-title">${esc(v.title)}</div>
                     <div class="viewed-date"><i class="fas fa-check-circle" style="color:#22c55e;font-size:10px;"></i> ${new Date(v.at).toLocaleDateString('ru')}</div></div></div>`).join('')
                 : `<p class="list-empty">Пусто — смотрите релизы более 10 мин</p>`;
-            // Закреплённые кастомные плейлисты
             const pinnedHtml = await renderPinnedPlaylists(uid);
             const pinnedSection = pinnedHtml ? `
                 <div class="list-section-wrap">
