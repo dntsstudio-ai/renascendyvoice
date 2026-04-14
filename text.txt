@@ -1,9 +1,10 @@
-match /users/{userId} {
-  allow read: if true;
-  allow create: if request.auth != null && request.auth.uid == userId;
-  allow update: if request.auth != null && (
-    request.auth.uid == userId ||
-    request.resource.data.diff(resource.data).affectedKeys().hasOnly(['subscribers', 'subscribersList'])
-  );
-  allow delete: if request.auth != null && request.auth.uid == userId;
-}
+https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCdE_m9VjxC8Qpemep0B1rLf7kzu2np6QA. Refused to connect because it violates the document's Content Security Policy.
+(анонимная)	@	firebase-auth.js:1
+await in (анонимная)		
+_performFetchWithErrorHandling	@	firebase-auth.js:1
+_performApiRequest	@	firebase-auth.js:1
+_performSignInRequest	@	firebase-auth.js:1
+signUp	@	firebase-auth.js:1
+handleRecaptchaFlow	@	firebase-auth.js:1
+createUserWithEmailAndPassword	@	firebase-auth.js:1
+document.getElementById.onclick	@	auth.js:55
