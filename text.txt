@@ -1,8 +1,72 @@
-<meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com https://www.googletagmanager.com https://cdn.emailjs.com https://smtpjs.com https://cdnjs.cloudflare.com;
-    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
-    font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;
-    ...
-">
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ПОЛЬЗОВАТЕЛИ
+    match /users/{userId} {
+      allow read: if true;
+      // Пользователь может менять свой профиль полностью. 
+      // ДРУГИЕ пользователи могут менять ТОЛЬКО поля подписчиков (для работы кнопки "Подписаться")
+      allow write: if request.auth != null && (
+        request.auth.uid == userId ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['subscribers', 'subscribersList'])
+      );
+    }
+    
+    // КОММЕНТАРИИ (Глобальные)
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && (
+        request.auth.uid == resource.data.userId || 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+    
+    // ПРОЕКТЫ (РЕЛИЗЫ)
+    match /projects/{projId} {
+      allow read: if true;
+      allow create, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // Разрешаем обычным юзерам обновлять счетчик комментов, просмотры, лайки и дизлайки
+      allow update: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' || 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commCount', 'views', 'likes', 'dislikes'])
+      );
+    }
 
+    // КОЛЛЕКЦИЯ RELEASES (если часть кода перешла на нее)
+    match /releases/{relId} {
+      allow read: if true;
+      allow create, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      allow update: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' || 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commCount', 'views', 'likes', 'dislikes'])
+      );
+    }
+
+    // ВЛОЖЕННЫЕ КОММЕНТАРИИ В РЕЛИЗАХ
+    match /releases/{relId}/comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && (
+        request.auth.uid == resource.data.uid || 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+
+    // DUB-IN (ЗАКРЫТЫЙ РАЗДЕЛ ДЛЯ ДАБЕРОВ)
+    match /dubin/{docId} {
+      allow read, write: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dub' || 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+
+    // ОСТАЛЬНЫЕ КОЛЛЕКЦИИ (Команда, страницы команды, настройки)
+    match /{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}
