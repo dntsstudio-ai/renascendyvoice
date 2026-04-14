@@ -1,10 +1,8 @@
-<meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com https://www.googletagmanager.com https://cdn.emailjs.com https://smtpjs.com https://cdnjs.cloudflare.com;
-    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
-    font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;
-    img-src 'self' data: blob: https: http:;
-    frame-src https://www.youtube.com https://drive.google.com https://youtube.com;
-    connect-src 'self' https: wss:;
-    object-src 'none';
-">
+export const FIREBASE_CONFIG = {
+    apiKey:            "AIzaSyCdE_m9VjxC8Qpemep0B1rLf7kzu2np6QA",
+    authDomain:        "renascendi-voice.firebaseapp.com",
+    projectId:         "renascendi-voice",
+    storageBucket:     "renascendi-voice.firebasestorage.app",
+    messagingSenderId: "1007789934185",
+    appId:             "1:1007789934185:web:94d495c8512270700084f8"
+};
