@@ -1,19 +1,6 @@
-
-﻿
 renascendyvoice/:9 X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.
-renascendyvoice/:26 Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.
+renascendyvoice/:774 Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.
 order.js:166 Uncaught SyntaxError: Invalid or unexpected token
-2
 renascendyvoice/:37 Uncaught ReferenceError: navigate is not defined
     at HTMLAnchorElement.onclick (renascendyvoice/:37:78)
-renascendyvoice/:38 Uncaught ReferenceError: navigate is not defined
-    at HTMLAnchorElement.onclick (renascendyvoice/:38:81)
-renascendyvoice/:42 Uncaught ReferenceError: navigate is not defined
-    at HTMLAnchorElement.onclick (renascendyvoice/:42:70)
 renascendyvoice/:1 Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.
-renascendyvoice/:37 Uncaught ReferenceError: navigate is not defined
-    at HTMLAnchorElement.onclick (renascendyvoice/:37:78)
-onclick	@	renascendyvoice/:37
-renascendyvoice/:38 Uncaught ReferenceError: navigate is not defined
-    at HTMLAnchorElement.onclick (renascendyvoice/:38:81)
-onclick	@	renascendyvoice/:38
