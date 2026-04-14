@@ -163,8 +163,7 @@ window.submitPaidOrder = () => {
         priceEl?.textContent ? `💰 *Ориент. стоимость:* ${priceEl.textContent}` : '',
         '',
         '⬇️ Выберите способ оплаты и продолжите оформление заказа ниже.'
-    ].filter(Boolean).join('
-');
+    ].filter(Boolean).join('\n');
 
     // Ссылка на бота с предзаполненным текстом
     const encoded = encodeURIComponent(msg);
