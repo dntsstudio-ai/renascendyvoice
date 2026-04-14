@@ -1,8 +1,1 @@
-export const FIREBASE_CONFIG = {
-    apiKey:            "AIzaSyCdE_m9VjxC8Qpemep0B1rLf7kzu2np6QA",
-    authDomain:        "renascendi-voice.firebaseapp.com",
-    projectId:         "renascendi-voice",
-    storageBucket:     "renascendi-voice.firebasestorage.app",
-    messagingSenderId: "1007789934185",
-    appId:             "1:1007789934185:web:94d495c8512270700084f8"
-};
+
