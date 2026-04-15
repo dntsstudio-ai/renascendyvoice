@@ -6,15 +6,14 @@
     <!-- Security headers via meta -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com https://www.googletagmanager.com https://cdn.emailjs.com https://smtpjs.com https://cdnjs.cloudflare.com;
-        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
-        font-src 'self' https://cdnjs.cloudflare.com;
+        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+        font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;
         img-src 'self' data: blob: https: http:;
         frame-src https://www.youtube.com https://drive.google.com https://youtube.com;
-        connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://api.emailjs.com wss://*.firebaseio.com;
+        connect-src 'self' https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://api.emailjs.com wss://*.firebaseio.com;
         object-src 'none';
     ">
     <title>Renascendi Voice — Профессиональная озвучка и дубляж</title>
@@ -23,9 +22,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<!-- Stub navigate to prevent "not defined" errors before module loads -->
+<script>
+(function(){
+    var _queue = [];
+    window.navigate = function(p, ps) { _queue.push([p, ps]); };
+    window._navQueue = _queue;
+})();
+</script>
 
 <div id="toast-container"></div>
 
